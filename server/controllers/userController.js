@@ -92,9 +92,9 @@ const loginController = async (req, res) => {
             });
         }
         //TOKEN JWT
-        const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: "7d",
-        });
+        // const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        //     expiresIn: "7d",
+        // });
 
         // undeinfed password
         user.password = undefined;

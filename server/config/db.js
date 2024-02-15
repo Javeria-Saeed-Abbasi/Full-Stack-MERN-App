@@ -1,21 +1,27 @@
 const mongoose = require("mongoose");
 const mqtt = require("mqtt");
 const colors = require("colors");
+const mqttBroker = 'mqtt://broker.hivemq.com';
+const mqttTopic = 'testing';
 
-// const client = mqtt.connect("mqtt://test.mosquitto.org");
-// client.on("connect", () => {
-//     client.subscribe("presence", (err) => {
-//         if (!err) {
-//             client.publish("presence", "Hello mqtt");
-//         }
-//     });
-// });
+const client = mqtt.connect(mqttBroker);
+// Connect to MQTT broker
+client.on('connect', async () => {
+    console.log(`MQTT CONNECTED`.bgWhite.black);
+});
+// Subscribe to MQTT topic
+client.on('connect', () => {
+    client.subscribe(mqttTopic, (error) => {
+        if (!error) {
+            client.publish(mqttTopic, "Hello mqtt");
+        }
+    });
 
-// client.on("message", (topic, message) => {
-//     // message is Buffer
-//     console.log(message.toString());
-//     client.end();
-// });
+});
+client.on('message', async (mqttTopic, message) => {
+    console.log('MQTT Received Topic:', mqttTopic.toString(), 'Message:', message.toString());
+})
+
 const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URL_CLOUD)
