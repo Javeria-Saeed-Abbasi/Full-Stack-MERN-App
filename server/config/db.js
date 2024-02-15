@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const mqtt = require("mqtt");
 const colors = require("colors");
-const mqttBroker = 'mqtt://broker.hivemq.com';
+const mqttBroker = 'mqtt://broker.hivemq.com:1883';
 const mqttTopic = 'testing';
 
 const client = mqtt.connect(mqttBroker);
